@@ -9,7 +9,7 @@ DGRC is a method for evaluating dialogue naturalness that, while retaining surpr
 </p> -->
 
 <p align="center">
-  <img src="https://github.com/sangheek16/hey-wait-a-minute/raw/main/data/figures/dgrc-4steps.pdf" alt="DGRC overview figure" width="650"/>
+  <img src="https://github.com/sangheek16/hey-wait-a-minute/raw/main/data/figures/dgrc-4steps.png" alt="DGRC overview figure" width="650"/>
 </p>
 
 **Figure 1.** Visualization of the DGRC method, involving four steps:  
