@@ -58,6 +58,7 @@ The end result of this process allows us to characterize an LM’s dialogue-resp
 └── README.md
 
 ```
+---
 
 ## Workflow
 
@@ -68,7 +69,6 @@ This code imports the dataset used in [Kim et al. (2022)](https://aclanthology.o
 - **Script:** `src/kim22-dcpmi-stimuli.py`
 - **Output:** `data/stimuli/kim22-arc-unique.csv` and `data/stimuli/kim22-coord-unique.csv`
 
----
 
 ### Steps 1 & 2: Divide and Generate
 Divide the original utterance into sub-utterances and generate model continuations for each.
@@ -78,8 +78,6 @@ Divide the original utterance into sub-utterances and generate model continuatio
 - **Output:** `data/generations/{model_name}/`  
   (this folder is empty in this repository but will be created when the code is executed)
 
----
-
 ### Step 3: Recombine
 Recombine the generations created for sub-utterances with the original utterance.
 
@@ -87,14 +85,14 @@ Recombine the generations created for sub-utterances with the original utterance
 - **Script:** Run `src/coalesce-generations.py`
 - **Output:** `data/results/sorted-generations/{freeform,rejection}/{model_name}-{arc,coord}.csv`
 
----
-
 ### Step 4: Compare Surprisals
 Compare the likelihoods of the recombined generated continuations.
 
 - **Input:** `data/results/sorted-generations/{freeform,rejection}/{model_name}-{arc,coord}.csv`
 - **Script:** Use `scripts/dgrc.sh` to execute both `src/dgrc-eval.py` and `src/dgrc-rejection-eval.py`
 - **Output:** `data/results/dgrc/{freeform,rejection}-{arc,coord}/{model_name}.csv`
+
+---
 
 ## Dependencies
 
@@ -107,6 +105,8 @@ minicons
 torch
 transformers
 ```
+
+---
 
 ## How to cite
 ```
