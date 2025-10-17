@@ -1,17 +1,15 @@
----
-output:
-  html_document: default
-  pdf_document: default
----
-
 # DGRC: Divide, Generate, Recombine, and Compare
 
 This repository contains the full experimental pipeline for the **DGRC** framework, reported in "[Hey, wait a minute: on at-issue sensitivity in Language Models](https://doi.org/10.48550/arXiv.2510.12740)" by [Sanghee J. Kim](https://sangheekim.net) and [Kanishka Misra](https://kanishka.website).
 
 DGRC is a method for evaluating dialogue naturalness that, while retaining surprisal-based minimal-pair evaluation, offers the flexibility of open-ended continuation. We leverage a linguistic notion of <i>at-issueness</i>. DGRC happens in 4 stages: (i) **Divide** a dialogue as a prompt, (ii) **Generate** continuations for subparts using LMs, (iii) **Recombine** the dialogue and continuations, and (iv) **Compare** the likelihoods of the recombined sequences. We suggest that this approach mitigates bias in linguistic analyses of LMs and enables systematic testing of discourse-sensitive behavior.
 
-<p align="center">
+<!-- <p align="center">
   <img src="data/figures/dgrc-4steps.pdf" alt="DGRC overview figure" width="650"/>
+</p> -->
+
+<p align="center">
+  <img src="https://github.com/sangheek16/hey-wait-a-minute/raw/main/data/figures/dgrc-4steps.png" alt="DGRC overview figure" width="650"/>
 </p>
 
 **Figure 1.** Visualization of the DGRC method, involving four steps:  
@@ -74,12 +72,12 @@ This code imports the dataset used in [Kim et al. (2022)](https://aclanthology.o
 Divide the original utterance into sub-utterances and Generate model continuations for each.
 <ul>
   <li> Input: `data/kim22_used_items.csv`
-  <li> Script: Run `scripts/collect-generations.sh` to exectue both `scripts/collect-generations-model.sh` (for instruct-tuned models) and `scripts/collect-generations-non-instruct.sh` (for base/non-instruct models). Both scripts use `src/collect_generations.py` internally.
-  <li> Output: `data/generations/{model_name}/` This folder is empty in this repository, but will created when the code is executed.
+  <li> Script: Run `scripts/collect-generations.sh` to execute both `scripts/collect-generations-model.sh` (for instruct-tuned models) and `scripts/collect-generations-non-instruct.sh` (for base/non-instruct models). Both scripts use `src/collect_generations.py` internally.
+  <li> Output: `data/generations/{model_name}/` This folder is empty in this repository, but will be created when the code is executed.
 </ul>
 
 ### Step 3: Recombine
-Recombine the generations that were cretaed based on sub-utterances with the original utterance.
+Recombine the generations that were created based on sub-utterances with the original utterance.
 <ul>
   <li> Input: `data/stimuli/kim22-arc-unique.csv` and `data/stimuli/kim22-coord-unique.csv`
   <li> Script: Run `src/coalesce-generations.py`
@@ -87,7 +85,7 @@ Recombine the generations that were cretaed based on sub-utterances with the ori
 </ul>
 
 ### Step 4: Compare Surprisals
-Compare likelihoods for the recombined generated continuations.
+Compare the likelihoods for the recombined generated continuations.
 <ul>
   <li> Input: `data/results/sorted-generations/{freeform,rejection}/{model_name}-{arc,coord}.csv`
   <li> Script: Use `scripts/dgrc.sh` to execute both `src/dgrc-eval.py` and `src/dgrc-rejection-eval.py`
@@ -106,7 +104,7 @@ torch
 transformers
 ```
 
-# How to cite
+## How to cite
 ```
 @inproceedings{kim2025atissue,
   title = {Hey, wait a minute: on at-issue sensitivity in Language Models},
