@@ -60,37 +60,41 @@ The end result of this process allows us to characterize an LM’s dialogue-resp
 ```
 
 ## Workflow
+
 ### Prepare Data
 This code imports the dataset used in [Kim et al. (2022)](https://aclanthology.org/2022.coling-1.72/) and splits it into two datasets used for the ARC and COORD conditions.
-<ul>
-  <li> Input: ```data/kim22_used_items.csv```
-  <li> Script: ```src/kim22-dcpmi-stimuli.py```
-  <li> Output: ```data/stimuli/kim22-arc-unique.csv``` and ```data/stimuli/kim22-coord-unique.csv```
-</ul>
+
+- **Input:** `data/kim22_used_items.csv`
+- **Script:** `src/kim22-dcpmi-stimuli.py`
+- **Output:** `data/stimuli/kim22-arc-unique.csv` and `data/stimuli/kim22-coord-unique.csv`
+
+---
 
 ### Steps 1 & 2: Divide and Generate
-Divide the original utterance into sub-utterances and Generate model continuations for each.
-<ul>
-  <li> Input: ```data/kim22_used_items.csv````
-  <li> Script: Run ```scripts/collect-generations.sh``` to execute both ```scripts/collect-generations-model.sh``` (for instruct-tuned models) and ```scripts/collect-generations-non-instruct.sh``` (for base/non-instruct models). Both scripts use `src/collect_generations.py``` internally.
-  <li> Output: ```data/generations/{model_name}/``` This folder is empty in this repository, but will be created when the code is executed.
-</ul>
+Divide the original utterance into sub-utterances and generate model continuations for each.
+
+- **Input:** `data/kim22_used_items.csv`
+- **Script:** Run `scripts/collect-generations.sh` to execute both `scripts/collect-generations-model.sh` (for instruct-tuned models) and `scripts/collect-generations-non-instruct.sh` (for base/non-instruct models). Both scripts use `src/collect-generations.py` internally.
+- **Output:** `data/generations/{model_name}/`  
+  (this folder is empty in this repository but will be created when the code is executed)
+
+---
 
 ### Step 3: Recombine
-Recombine the generations that were created based on sub-utterances with the original utterance.
-<ul>
-  <li> Input: ```data/stimuli/kim22-arc-unique.csv``` and ```data/stimuli/kim22-coord-unique.csv```
-  <li> Script: Run ```src/coalesce-generations.py```
-  <li> Output: ```data/results/sorted-generations/{freeform,rejection}/{model_name}-{arc,coord}.csv```
-</ul>
+Recombine the generations created for sub-utterances with the original utterance.
+
+- **Input:** `data/stimuli/kim22-arc-unique.csv` and `data/stimuli/kim22-coord-unique.csv`
+- **Script:** Run `src/coalesce-generations.py`
+- **Output:** `data/results/sorted-generations/{freeform,rejection}/{model_name}-{arc,coord}.csv`
+
+---
 
 ### Step 4: Compare Surprisals
-Compare the likelihoods for the recombined generated continuations.
-<ul>
-  <li> Input: ```data/results/sorted-generations/{freeform,rejection}/{model_name}-{arc,coord}.csv```
-  <li> Script: Use ```scripts/dgrc.sh``` to execute both ```src/dgrc-eval.py``` and ```src/dgrc-rejection-eval.py```
-  <li> Output: ```data/results/dgrc/{freeform,rejection}-{arc,coord}/{model_name}.csv```
-</ul>
+Compare the likelihoods of the recombined generated continuations.
+
+- **Input:** `data/results/sorted-generations/{freeform,rejection}/{model_name}-{arc,coord}.csv`
+- **Script:** Use `scripts/dgrc.sh` to execute both `src/dgrc-eval.py` and `src/dgrc-rejection-eval.py`
+- **Output:** `data/results/dgrc/{freeform,rejection}-{arc,coord}/{model_name}.csv`
 
 ## Dependencies
 
