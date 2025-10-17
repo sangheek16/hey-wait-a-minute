@@ -9,7 +9,7 @@ DGRC is a method for evaluating dialogue naturalness that, while retaining surpr
 </p> -->
 
 <p align="center">
-  <img src="https://github.com/sangheek16/hey-wait-a-minute/raw/main/data/figures/dgrc-4steps.png" alt="DGRC overview figure" width="650"/>
+  <img src="https://github.com/sangheek16/hey-wait-a-minute/raw/main/data/figures/dgrc-4steps.pdf" alt="DGRC overview figure" width="650"/>
 </p>
 
 **Figure 1.** Visualization of the DGRC method, involving four steps:  
@@ -63,33 +63,33 @@ The end result of this process allows us to characterize an LM’s dialogue-resp
 ### Prepare Data
 This code imports the dataset used in [Kim et al. (2022)](https://aclanthology.org/2022.coling-1.72/) and splits it into two datasets used for the ARC and COORD conditions.
 <ul>
-  <li> Input: `data/kim22_used_items.csv`
-  <li> Script: `src/kim22-dcpmi-stimuli.py`
-  <li> Output: `data/stimuli/kim22-arc-unique.csv` and `data/stimuli/kim22-coord-unique.csv`
+  <li> Input: ```data/kim22_used_items.csv```
+  <li> Script: ```src/kim22-dcpmi-stimuli.py```
+  <li> Output: ```data/stimuli/kim22-arc-unique.csv``` and ```data/stimuli/kim22-coord-unique.csv```
 </ul>
 
 ### Steps 1 & 2: Divide and Generate
 Divide the original utterance into sub-utterances and Generate model continuations for each.
 <ul>
-  <li> Input: `data/kim22_used_items.csv`
-  <li> Script: Run `scripts/collect-generations.sh` to execute both `scripts/collect-generations-model.sh` (for instruct-tuned models) and `scripts/collect-generations-non-instruct.sh` (for base/non-instruct models). Both scripts use `src/collect_generations.py` internally.
-  <li> Output: `data/generations/{model_name}/` This folder is empty in this repository, but will be created when the code is executed.
+  <li> Input: ```data/kim22_used_items.csv````
+  <li> Script: Run ```scripts/collect-generations.sh``` to execute both ```scripts/collect-generations-model.sh``` (for instruct-tuned models) and ```scripts/collect-generations-non-instruct.sh``` (for base/non-instruct models). Both scripts use `src/collect_generations.py``` internally.
+  <li> Output: ```data/generations/{model_name}/``` This folder is empty in this repository, but will be created when the code is executed.
 </ul>
 
 ### Step 3: Recombine
 Recombine the generations that were created based on sub-utterances with the original utterance.
 <ul>
-  <li> Input: `data/stimuli/kim22-arc-unique.csv` and `data/stimuli/kim22-coord-unique.csv`
-  <li> Script: Run `src/coalesce-generations.py`
-  <li> Output: `data/results/sorted-generations/{freeform,rejection}/{model_name}-{arc,coord}.csv`
+  <li> Input: ```data/stimuli/kim22-arc-unique.csv``` and ```data/stimuli/kim22-coord-unique.csv```
+  <li> Script: Run ```src/coalesce-generations.py```
+  <li> Output: ```data/results/sorted-generations/{freeform,rejection}/{model_name}-{arc,coord}.csv```
 </ul>
 
 ### Step 4: Compare Surprisals
 Compare the likelihoods for the recombined generated continuations.
 <ul>
-  <li> Input: `data/results/sorted-generations/{freeform,rejection}/{model_name}-{arc,coord}.csv`
-  <li> Script: Use `scripts/dgrc.sh` to execute both `src/dgrc-eval.py` and `src/dgrc-rejection-eval.py`
-  <li> Output: `data/results/dgrc/{freeform,rejection}-{arc,coord}/{model_name}.csv`
+  <li> Input: ```data/results/sorted-generations/{freeform,rejection}/{model_name}-{arc,coord}.csv```
+  <li> Script: Use ```scripts/dgrc.sh``` to execute both ```src/dgrc-eval.py``` and ```src/dgrc-rejection-eval.py```
+  <li> Output: ```data/results/dgrc/{freeform,rejection}-{arc,coord}/{model_name}.csv```
 </ul>
 
 ## Dependencies
